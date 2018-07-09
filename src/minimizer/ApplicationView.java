@@ -1,9 +1,7 @@
 package minimizer;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Dimension;
-import java.util.EventObject;
 
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -17,9 +15,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
-import javax.swing.event.CellEditorListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellEditor;
 
