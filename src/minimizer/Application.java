@@ -9,6 +9,7 @@ public class Application
 	{
 		ApplicationModel model = new ApplicationModel();
 		ApplicationView view = new ApplicationView(WIDTH, HEIGHT);
+		@SuppressWarnings("unused")	// Verändert model und view
 		ApplicationController controller = new ApplicationController(model, view);
 	}
 }
