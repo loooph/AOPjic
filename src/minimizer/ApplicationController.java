@@ -2,15 +2,11 @@ package minimizer;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.lang.reflect.Array;
-import java.util.Arrays;
-import java.util.Stack;
 
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumnModel;
 
 public class ApplicationController implements ActionListener, ChangeListener
 {
