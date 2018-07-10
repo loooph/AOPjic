@@ -17,7 +17,7 @@ public class KarnaughMap extends Component {
 	 */
 	private KMAPVAL[][] data;
 	
-	private List<List<Point>> primes;
+	private List<Prime> primes;
 	
 	public KarnaughMap(int dimension) {
 		primes = new ArrayList<>();
@@ -41,7 +41,7 @@ public class KarnaughMap extends Component {
 		return data[row][col] = val;
 	}
 	
-	public void addPrime(List<Point> prime) {
+	public void addPrime(Prime prime) {
 		primes.add(prime);
 	}
 	// TODO Zeichnen
