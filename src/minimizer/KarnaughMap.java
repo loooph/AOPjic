@@ -66,7 +66,7 @@ public class KarnaughMap {
 		int cellwidth = width / (getXDim() + 1);
 		int cellheight = height / (getYDim() + 1);
 		Stroke thin = new BasicStroke(1.0f);
-		Stroke thick = new BasicStroke(1.5f);
+		Stroke thick = new BasicStroke(1.6f);
 		
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		
@@ -82,9 +82,21 @@ public class KarnaughMap {
 		g.setStroke(thin);		
 		g.setColor(Color.GRAY);
 		for(int i = 2; i <= getXDim(); ++i) {
+			if( i % 4 == 1 ) {
+				g.setStroke(thick);
+			}
+			else {
+				g.setStroke(thin);
+			}
 			g.drawLine(x + i * cellwidth, y, x + i * cellwidth, y + height);
 		}
 		for(int i = 2; i <= getYDim(); ++i) {
+			if( i % 4 == 1 ) {
+				g.setStroke(thick);
+			}
+			else {
+				g.setStroke(thin);
+			}
 			g.drawLine(x, y + i * cellheight, x + width, y + i * cellheight);
 		}
 		// Gray-Code
