@@ -2,9 +2,12 @@ package minimizer;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.Stroke;
+import java.awt.font.TextLayout;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -80,7 +83,7 @@ public class KarnaughMap {
 		g.drawLine((int) ((x +  cellwidth / 8 * 0.293)) + 1, (int) (y + cellheight / 8 * 0.293) + 1, x + cellwidth, y + cellheight);
 		
 		g.setStroke(thin);		
-		g.setColor(Color.GRAY);
+		g.setColor(Color.DARK_GRAY);
 		for(int i = 2; i <= getXDim(); ++i) {
 			if( i % 4 == 1 ) {
 				g.setStroke(thick);
@@ -99,15 +102,32 @@ public class KarnaughMap {
 			}
 			g.drawLine(x, y + i * cellheight, x + width, y + i * cellheight);
 		}
+		// Beschriftung
+		g.setColor(Color.BLACK);
+		g.setFont(new Font(Font.MONOSPACED, Font.BOLD, 240));
+		g.setFont(chooseFontSize(g.getFont(), g, getGrayCode(0, getXDim() - 1), 4 * cellwidth / 5,  4 * cellheight / 5));
+		Rectangle2D textBounds = new TextLayout(getGrayCode(0, getXDim() - 1), g.getFont(), g.getFontRenderContext()).getBounds();
 		// Gray-Code
+		// Spalten
 		for(int i = 0; i < getXDim(); ++i) {
-			g.drawString(getGrayCode(i, getXDim() - 1), x + (i + 1) * cellwidth + 3, y + 2 * cellheight / 3);
+			g.drawString(getGrayCode(i, getXDim() - 1), (int) (x + (i + 2) * cellwidth - textBounds.getWidth() - cellwidth / 10), (int) (y + 2 * cellheight / 3 + textBounds.getHeight() / 3));
 		}
+		// Zeilen
+		textBounds = new TextLayout(getGrayCode(0, getYDim() - 1), g.getFont(), g.getFontRenderContext()).getBounds();
 		for(int i = 0; i < getYDim(); ++i) {
-			g.drawString(getGrayCode(i, getYDim() - 1), x + 3, y + (i + 1) * cellheight + 2 * cellheight / 3);
+			g.drawString(getGrayCode(i, getYDim() - 1), (int) (x + cellwidth - textBounds.getWidth()) - cellwidth / 10, (int) (y + (i + 2) * cellheight - (cellheight - textBounds.getHeight()) / 3));
 		}
+		// TODO Variablennamen eintragen
+		// TODO Daten eintragen
 	}
 	
+	private Font chooseFontSize(Font font, Graphics2D g, String maxText, int maxWidth, int maxHeight) {
+		while(new TextLayout(maxText, font, g.getFontRenderContext()).getBounds().getWidth() > maxWidth || new TextLayout(maxText, font, g.getFontRenderContext()).getBounds().getHeight() > maxHeight) {
+			font = font.deriveFont(font.getSize() - 1.0f);
+		}
+		return font;
+	}
+
 	private String getGrayCode(int i, int maxVal) {
 		String grayCode = Integer.toBinaryString(i ^ (i >> 1));
 		while(grayCode.length() < Integer.toBinaryString(maxVal).length()) {
