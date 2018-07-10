@@ -1,6 +1,9 @@
 package minimizer;
 
 import java.awt.Component;
+import java.awt.Point;
+import java.util.ArrayList;
+import java.util.List;
 
 public class KarnaughMap extends Component {
 
@@ -14,11 +17,15 @@ public class KarnaughMap extends Component {
 	 */
 	private KMAPVAL[][] data;
 	
+	private List<List<Point>> primes;
+	
 	public KarnaughMap(int dimension) {
+		primes = new ArrayList<>();
 		data = new KMAPVAL[dimension][dimension];
 	}
 	
 	public KarnaughMap(KMAPVAL[][] data) {
+		primes = new ArrayList<>();
 		this.data = data;
 	}
 	
@@ -34,5 +41,8 @@ public class KarnaughMap extends Component {
 		return data[row][col] = val;
 	}
 	
+	public void addPrime(List<Point> prime) {
+		primes.add(prime);
+	}
 	// TODO Zeichnen
 }
