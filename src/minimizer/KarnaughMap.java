@@ -18,6 +18,8 @@ import javax.swing.JLabel;
 
 public class KarnaughMap {
 	
+	public static final String phi = "\u03A6";
+	
 	/**
 	 * Werte des Karnaugh-Plans, erster Index entspricht Zeilen, zweiter Index entspricht Spalten
 	 */
@@ -61,7 +63,7 @@ public class KarnaughMap {
 	public void addPrime(Prime prime) {
 		primes.add(prime);
 	}
-	// TODO Füllen
+
 	/**
 	 * Zeichnet den Karnaugh-Plan
 	 * @param g Graphikobjekt zum Zeichnen
@@ -107,11 +109,28 @@ public class KarnaughMap {
 			}
 			g.drawLine(x, y + i * cellheight, x + width, y + i * cellheight);
 		}
+		
 		// Beschriftung
 		g.setColor(Color.BLACK);
 		g.setFont(new Font(Font.MONOSPACED, Font.BOLD, g.getFont().getSize()));
 		g.setFont(chooseFontSize(g.getFont(), g, getGrayCode(0, getXDim() - 1), 4 * cellwidth / 5,  4 * cellheight / 5));
 		Rectangle2D textBounds = new TextLayout(getGrayCode(0, getXDim() - 1), g.getFont(), g.getFontRenderContext()).getBounds();
+		// Daten eintragen
+				// g.setFont(chooseFontSize(new Font(Font.MONOSPACED, Font.BOLD, 240), g, phi, 4 * cellwidth / 5,  4 * cellheight / 5));
+				Rectangle2D charsize = new TextLayout(phi, g.getFont(), g.getFontRenderContext()).getBounds();
+				for(int i = 0; i < data.length; ++i) {
+					for(int j = 0; j < data.length; ++j) {
+						String str;
+						if(data[i][j] == KMAPVAL.DONTCARE) {
+							str = phi;
+						} else if(data[i][j] == KMAPVAL.FALSE) {
+							str = "0";
+						} else {
+							str = "1";
+						}
+						g.drawString(str, (int) (x + (j + 2) * cellwidth - charsize.getWidth() - cellwidth / 10), (int) (y + (i + 2) * cellheight - (cellheight - charsize.getHeight()) / 3));
+					}
+				}
 		// Gray-Code
 		// Spalten
 		for(int i = 0; i < getXDim(); ++i) {
@@ -122,8 +141,9 @@ public class KarnaughMap {
 		for(int i = 0; i < getYDim(); ++i) {
 			g.drawString(getGrayCode(i, getYDim() - 1), (int) (x + cellwidth - textBounds.getWidth()) - cellwidth / 10, (int) (y + (i + 2) * cellheight - (cellheight - textBounds.getHeight()) / 3));
 		}
-		// TODO Variablennamen lesbar machen
 		
+		// TODO Variablennamen lesbar machen
+		// Variablennamen
 		// Strings generieren
 		String colString = "";
 		String rowString = "";
@@ -170,10 +190,7 @@ public class KarnaughMap {
 		label.paint(gBi);
 		gBi.dispose();
 		
-		g.drawImage(bi, x + bi.getWidth() / 10, y + cellheight - bi.getHeight(), null);
-		
-		
-		// TODO Daten eintragen 
+		g.drawImage(bi, x + bi.getWidth() / 10, y + cellheight - bi.getHeight(), null);		
 	}
 	
 	private Font chooseFontSize(Font font, Graphics2D g, String maxText, int maxWidth, int maxHeight) {
