@@ -122,7 +122,8 @@ public class KarnaughMap {
 		for(int i = 0; i < getYDim(); ++i) {
 			g.drawString(getGrayCode(i, getYDim() - 1), (int) (x + cellwidth - textBounds.getWidth()) - cellwidth / 10, (int) (y + (i + 2) * cellheight - (cellheight - textBounds.getHeight()) / 3));
 		}
-		// TODO Variablennamen eintragen
+		// TODO Variablennamen lesbar machen
+		
 		// Strings generieren
 		String colString = "";
 		String rowString = "";
@@ -143,46 +144,35 @@ public class KarnaughMap {
 		topTriangle.addPoint(x + cellwidth, y);
 		topTriangle.addPoint(x + cellwidth, y + cellheight);
 		
-		// Zeilenbeschriftung
-		JLabel rowLabel = new JLabel(rowString);
-		rowLabel.setFont(g.getFont());
-		rowLabel.setSize(rowLabel.getPreferredSize());
-		Rectangle testRect = rowLabel.getBounds(null);
-		while(!botTriangle.contains(testRect)) {
-			rowLabel.setFont(rowLabel.getFont().deriveFont(rowLabel.getFont().getSize() - 1.0f));
-			rowLabel.setSize(rowLabel.getPreferredSize());
-			rowLabel.setBounds(x + rowLabel.getWidth() / 10, y + cellheight - rowLabel.getHeight(), rowLabel.getWidth(), rowLabel.getHeight());
-			rowLabel.getBounds(testRect);
-		}
-		BufferedImage biRows = new BufferedImage(rowLabel.getWidth(), rowLabel.getHeight(), BufferedImage.TYPE_INT_ARGB);
-		Graphics2D gBiRows = biRows.createGraphics();
-		gBiRows.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		rowLabel.paint(gBiRows);
-		gBiRows.dispose();
-		
-		g.drawImage(biRows, x + biRows.getWidth() / 10, y + cellheight - biRows.getHeight(), null);
-		
 		// Spaltenbeschriftung
-		rowLabel.setText(colString);
-		rowLabel.setSize(rowLabel.getPreferredSize());
-//		JLabel colLabel = new JLabel(colString);
-//		colLabel.setFont();
-//		colLabel.setSize(colLabel.getPreferredSize());
-//		testRect = colLabel.getBounds(null);
-//		while(!topTriangle.contains(testRect)) {
-//			colLabel.setFont(colLabel.getFont().deriveFont(colLabel.getFont().getSize() - 1.0f));
-//			colLabel.setSize(colLabel.getPreferredSize());
-//			colLabel.setBounds(x + cellwidth - colLabel.getWidth(), y , colLabel.getWidth(), colLabel.getHeight());
-//			colLabel.getBounds(testRect);
-//		}
-		BufferedImage biCols = new BufferedImage(rowLabel.getWidth(), rowLabel.getHeight(), BufferedImage.TYPE_INT_ARGB);
-		Graphics2D gBiCols = biCols.createGraphics();
-		gBiCols.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		rowLabel.paint(gBiCols);
-		gBiCols.dispose();
-		
-		g.drawImage(biCols, x + cellwidth - rowLabel.getWidth(), y, null);
+		JLabel label = new JLabel(colString);
+		label.setSize(label.getPreferredSize());
+		label.setFont(g.getFont());
+		label.setSize(label.getPreferredSize());
+		Rectangle testRect = label.getBounds(null);
+		while(!topTriangle.contains(testRect)) {
+			label.setFont(label.getFont().deriveFont(label.getFont().getSize() - 1.0f));
+			label.setSize(label.getPreferredSize());
+			label.setBounds(x + cellwidth - label.getWidth(), y , label.getWidth(), label.getHeight());
+			label.getBounds(testRect);
+		}
+		BufferedImage bi = new BufferedImage(label.getWidth(), label.getHeight(), BufferedImage.TYPE_INT_ARGB);
+		Graphics2D gBi = bi.createGraphics();
+		gBi.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		label.paint(gBi);		
+		g.drawImage(bi, x + cellwidth - label.getWidth(), y, null);
 
+		// Zeilenbeschriftung
+		label.setText(rowString);
+		bi = new BufferedImage(label.getWidth(), label.getHeight(), BufferedImage.TYPE_INT_ARGB);
+		gBi = bi.createGraphics();
+		gBi.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		label.paint(gBi);
+		gBi.dispose();
+		
+		g.drawImage(bi, x + bi.getWidth() / 10, y + cellheight - bi.getHeight(), null);
+		
+		
 		// TODO Daten eintragen 
 	}
 	
