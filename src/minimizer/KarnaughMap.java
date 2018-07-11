@@ -4,12 +4,17 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
+import java.awt.Polygon;
+import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.Stroke;
 import java.awt.font.TextLayout;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.JLabel;
 
 public class KarnaughMap {
 	
@@ -104,7 +109,7 @@ public class KarnaughMap {
 		}
 		// Beschriftung
 		g.setColor(Color.BLACK);
-		g.setFont(new Font(Font.MONOSPACED, Font.BOLD, 240));
+		g.setFont(new Font(Font.MONOSPACED, Font.BOLD, g.getFont().getSize()));
 		g.setFont(chooseFontSize(g.getFont(), g, getGrayCode(0, getXDim() - 1), 4 * cellwidth / 5,  4 * cellheight / 5));
 		Rectangle2D textBounds = new TextLayout(getGrayCode(0, getXDim() - 1), g.getFont(), g.getFontRenderContext()).getBounds();
 		// Gray-Code
@@ -118,7 +123,67 @@ public class KarnaughMap {
 			g.drawString(getGrayCode(i, getYDim() - 1), (int) (x + cellwidth - textBounds.getWidth()) - cellwidth / 10, (int) (y + (i + 2) * cellheight - (cellheight - textBounds.getHeight()) / 3));
 		}
 		// TODO Variablennamen eintragen
-		// TODO Daten eintragen
+		// Strings generieren
+		String colString = "";
+		String rowString = "";
+		for(int i = 0; i < Integer.toBinaryString(getXDim() - 1).length(); ++i) {
+			colString = "x<sub>" + i + "</sub>" + colString;
+		}
+		for(int i = Integer.toBinaryString(getXDim() - 1).length(); i < Integer.toBinaryString(getXDim() - 1).length() + Integer.toBinaryString(getYDim() - 1).length(); ++i) {
+			rowString = "x<sub>" + i + "</sub>" + rowString;
+		}
+		colString = "<html>" + colString + "</html>";
+		rowString = "<html>" + rowString + "</html>";
+		Polygon botTriangle = new Polygon();
+		botTriangle.addPoint(x, y);
+		botTriangle.addPoint(x, y + cellheight);
+		botTriangle.addPoint(x + cellwidth, y + cellheight);
+		Polygon topTriangle = new Polygon();
+		topTriangle.addPoint(x, y);
+		topTriangle.addPoint(x + cellwidth, y);
+		topTriangle.addPoint(x + cellwidth, y + cellheight);
+		
+		// Zeilenbeschriftung
+		JLabel rowLabel = new JLabel(rowString);
+		rowLabel.setFont(g.getFont());
+		rowLabel.setSize(rowLabel.getPreferredSize());
+		Rectangle testRect = rowLabel.getBounds(null);
+		while(!botTriangle.contains(testRect)) {
+			rowLabel.setFont(rowLabel.getFont().deriveFont(rowLabel.getFont().getSize() - 1.0f));
+			rowLabel.setSize(rowLabel.getPreferredSize());
+			rowLabel.setBounds(x + rowLabel.getWidth() / 10, y + cellheight - rowLabel.getHeight(), rowLabel.getWidth(), rowLabel.getHeight());
+			rowLabel.getBounds(testRect);
+		}
+		BufferedImage biRows = new BufferedImage(rowLabel.getWidth(), rowLabel.getHeight(), BufferedImage.TYPE_INT_ARGB);
+		Graphics2D gBiRows = biRows.createGraphics();
+		gBiRows.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		rowLabel.paint(gBiRows);
+		gBiRows.dispose();
+		
+		g.drawImage(biRows, x + biRows.getWidth() / 10, y + cellheight - biRows.getHeight(), null);
+		
+		// Spaltenbeschriftung
+		rowLabel.setText(colString);
+		rowLabel.setSize(rowLabel.getPreferredSize());
+//		JLabel colLabel = new JLabel(colString);
+//		colLabel.setFont();
+//		colLabel.setSize(colLabel.getPreferredSize());
+//		testRect = colLabel.getBounds(null);
+//		while(!topTriangle.contains(testRect)) {
+//			colLabel.setFont(colLabel.getFont().deriveFont(colLabel.getFont().getSize() - 1.0f));
+//			colLabel.setSize(colLabel.getPreferredSize());
+//			colLabel.setBounds(x + cellwidth - colLabel.getWidth(), y , colLabel.getWidth(), colLabel.getHeight());
+//			colLabel.getBounds(testRect);
+//		}
+		BufferedImage biCols = new BufferedImage(rowLabel.getWidth(), rowLabel.getHeight(), BufferedImage.TYPE_INT_ARGB);
+		Graphics2D gBiCols = biCols.createGraphics();
+		gBiCols.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		rowLabel.paint(gBiCols);
+		gBiCols.dispose();
+		
+		g.drawImage(biCols, x + cellwidth - rowLabel.getWidth(), y, null);
+
+		// TODO Daten eintragen 
 	}
 	
 	private Font chooseFontSize(Font font, Graphics2D g, String maxText, int maxWidth, int maxHeight) {
