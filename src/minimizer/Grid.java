@@ -2,37 +2,38 @@ package minimizer;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.GridLayout;
 import java.awt.Stroke;
 import java.util.Random;
 
 import javax.swing.JComponent;
-import javax.swing.border.LineBorder;
 
 public class Grid extends JComponent {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+
+	
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
-		drawGrid((Graphics2D) g);
+		draw((Graphics2D) g);
 	}
 
-	private void drawGrid(Graphics2D g) {
+	private void draw(Graphics2D g) {
 		if(getCols() == 0) {
 			return;
 		}
 		Stroke thin = new BasicStroke(1.0f);
 		Stroke thick = new BasicStroke(1.6f);
-		int cellwidth = getWidth() / getCols();
-		int cellheight = getHeight() / getLines();
-		int xOff = getWidth() % getCols() / 2;
-		int yOff = getHeight() % getLines() / 2;
+		int cellheight = (int) data[0][0].getPreferredSize().getHeight() + 1;
+		int cellwidth = Integer.max((int) data[0][0].getPreferredSize().getWidth() + 1, cellheight * 2);//getWidth() / getCols();
+		int xOff = 0;//getWidth() % getCols() / 2;
+		int yOff = 0;//getHeight() % getLines() / 2;
 		
 		g.setStroke(thin);		
 		g.setColor(Color.DARK_GRAY);
@@ -57,16 +58,22 @@ public class Grid extends JComponent {
 			}
 			g.drawLine(getX(), getY() + yOff + i * cellheight, getX() + getWidth(), getY() + yOff + i * cellheight);
 		}
+		// Zellen
+		for(int i = 0; i < getLines(); ++i) {
+			for(int j = 0; j < getCols(); ++j) {
+				data[i][j].setBounds(getX() + j * cellwidth, getY() + i * cellheight, cellwidth, cellheight);
+			}
+		}
 	}
 	
-	private int getCols() {
+	public int getCols() {
 		if(data.length == 0) {
 			return 0;
 		}
 		return data[0].length;
 	}
 	
-	private int getLines() {
+	public int getLines() {
 		return data.length;
 	}
 
@@ -74,11 +81,19 @@ public class Grid extends JComponent {
 		data[row][col].setText(val.toString());
 	}
 	
+	@Override
+	public Dimension getPreferredSize() {
+		if(getCols() == 0) {
+			return new Dimension(0,0);
+		}
+		return new Dimension(getCols() * Integer.max((int) data[0][0].getPreferredSize().getWidth(), (int) data[0][0].getPreferredSize().getHeight() * 2), (int)(getLines() * data[0][0].getPreferredSize().getHeight()));
+	}
+
 	private Cell[][] data;
 	
 	public Grid(int lines, int columns, Font font) {
 		super();
-		setLayout(new GridLayout(lines, columns));
+		//setLayout(new GridLayout(lines, columns));
 		data = new Cell[lines][columns];
 		for(int i = 0; i < data.length; ++i) {
 			for(int j = 0; j < data[i].length; ++j) {
