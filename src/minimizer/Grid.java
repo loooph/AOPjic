@@ -19,8 +19,7 @@ public class Grid extends JComponent {
 
 	
 	@Override
-	public void paint(Graphics g) {
-		super.paint(g);
+	public void paintComponent(Graphics g) {
 		draw((Graphics2D) g);
 	}
 
@@ -30,8 +29,8 @@ public class Grid extends JComponent {
 		}
 		Stroke thin = new BasicStroke(1.0f);
 		Stroke thick = new BasicStroke(1.6f);
-		int cellheight = (int) data[0][0].getPreferredSize().getHeight() + 1;
-		int cellwidth = Integer.max((int) data[0][0].getPreferredSize().getWidth() + 1, cellheight * 2);//getWidth() / getCols();
+		int cellheight = (int) data[0][0].getPreferredSize().getHeight();
+		int cellwidth = Integer.max((int) data[0][0].getPreferredSize().getWidth(), cellheight * 2);//getWidth() / getCols();
 		int xOff = 0;//getWidth() % getCols() / 2;
 		int yOff = 0;//getHeight() % getLines() / 2;
 		
