@@ -1,6 +1,5 @@
 package minimizer;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -25,11 +24,10 @@ public class Grid extends JComponent {
 		if(getCols() == 0) {
 			return;
 		}
-		g.setStroke(Map.THIN);		
-		g.setColor(Color.DARK_GRAY);
 		
+		// TODO Umrandung fett zeichnen
 		// vertikal
-		for(int i = 1; i < getCols(); ++i) {
+		for(int i = 0; i <= getCols(); ++i) {
 			if( i % 4 == 0 ) {
 				g.setStroke(Map.THICK);
 			}
@@ -39,7 +37,7 @@ public class Grid extends JComponent {
 			g.drawLine(i * getCellwidth(), 0 , i * getCellwidth(), getHeight());
 		}
 		// horizontal
-		for(int i = 1; i < getLines(); ++i) {
+		for(int i = 0; i <= getLines(); ++i) {
 			if( i % 4 == 0 ) {
 				g.setStroke(Map.THICK);
 			}
