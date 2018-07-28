@@ -44,7 +44,7 @@ public class Grid extends JComponent {
 			else {
 				g.setStroke(Map.THIN);
 			}
-			g.drawLine(0, i * getCellheight(), getWidth(), i * getCellheight());
+			g.drawLine(0, i * getCellheight(), getCols()  * getCellwidth(), i * getCellheight());
 		}
 		// Zellen
 		for(int i = 0; i < getLines(); ++i) {
@@ -108,9 +108,6 @@ public class Grid extends JComponent {
 	
 	@Override
 	public Dimension getPreferredSize() {
-		if(getCols() == 0) {
-			return new Dimension(0,0);
-		}
 		return new Dimension((int) (getCols() * getCellwidth()), getLines() * getCellheight());
 	}
 
