@@ -34,7 +34,7 @@ public class Grid extends JComponent {
 			else {
 				g.setStroke(Map.THIN);
 			}
-			g.drawLine(i * getCellwidth(), 0 , i * getCellwidth(), getHeight());
+			g.drawLine(i * getCellwidth() - 1, 0 , i * getCellwidth() - 1, getHeight());
 		}
 		// horizontal
 		for(int i = 0; i <= getLines(); ++i) {
@@ -44,7 +44,7 @@ public class Grid extends JComponent {
 			else {
 				g.setStroke(Map.THIN);
 			}
-			g.drawLine(0, i * getCellheight(), getCols()  * getCellwidth(), i * getCellheight());
+			g.drawLine(0, i * getCellheight() - 1, getWidth(), i * getCellheight() - 1);
 		}
 		// Zellen
 		for(int i = 0; i < getLines(); ++i) {
