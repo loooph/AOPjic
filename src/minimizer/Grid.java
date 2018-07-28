@@ -1,12 +1,10 @@
 package minimizer;
 
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Stroke;
 import java.util.Random;
 
 import javax.swing.JComponent;
@@ -27,40 +25,33 @@ public class Grid extends JComponent {
 		if(getCols() == 0) {
 			return;
 		}
-		Stroke thin = new BasicStroke(1.0f);
-		Stroke thick = new BasicStroke(1.6f);
-		int cellheight = (int) data[0][0].getPreferredSize().getHeight();
-		int cellwidth = Integer.max((int) data[0][0].getPreferredSize().getWidth(), cellheight * 2);//getWidth() / getCols();
-		int xOff = 0;//getWidth() % getCols() / 2;
-		int yOff = 0;//getHeight() % getLines() / 2;
-		
-		g.setStroke(thin);		
+		g.setStroke(Map.THIN);		
 		g.setColor(Color.DARK_GRAY);
 		
 		// vertikal
 		for(int i = 1; i < getCols(); ++i) {
 			if( i % 4 == 0 ) {
-				g.setStroke(thick);
+				g.setStroke(Map.THICK);
 			}
 			else {
-				g.setStroke(thin);
+				g.setStroke(Map.THIN);
 			}
-			g.drawLine(getX() + xOff + i * cellwidth, getY(), getX() + xOff + i * cellwidth, getY() + getHeight());
+			g.drawLine(i * getCellwidth(), 0 , i * getCellwidth(), getHeight());
 		}
 		// horizontal
 		for(int i = 1; i < getLines(); ++i) {
 			if( i % 4 == 0 ) {
-				g.setStroke(thick);
+				g.setStroke(Map.THICK);
 			}
 			else {
-				g.setStroke(thin);
+				g.setStroke(Map.THIN);
 			}
-			g.drawLine(getX(), getY() + yOff + i * cellheight, getX() + getWidth(), getY() + yOff + i * cellheight);
+			g.drawLine(0, i * getCellheight(), getWidth(), i * getCellheight());
 		}
 		// Zellen
 		for(int i = 0; i < getLines(); ++i) {
 			for(int j = 0; j < getCols(); ++j) {
-				data[i][j].setBounds(getX() + j * cellwidth, getY() + i * cellheight, cellwidth, cellheight);
+				data[i][j].setBounds(j * getCellwidth(), i * getCellheight(), getCellwidth(), getCellheight());
 			}
 		}
 	}
@@ -78,6 +69,43 @@ public class Grid extends JComponent {
 
 	public void setVal(KMAPVAL val, int row, int col) {
 		data[row][col].setText(val.toString());
+		updateCellSize(row, col);
+	}
+	
+	public void setVal(String val, int row, int col) {
+		data[row][col].setText(val);
+		updateCellSize(row, col);
+	}
+	
+	public void setVal(String val, int pos) {
+		data[pos % getLines()][pos / getLines()].setText(val);;
+		updateCellSize(pos % getLines(), pos / getLines());
+	}
+	
+	private void updateCellSize(int row, int col) {
+		cellheight = Integer.max((int) data[row][col].getPreferredSize().getHeight(), cellheight);
+		cellwidth = Integer.max(Integer.max((int) data[row][col].getPreferredSize().getWidth(), getCellheight() * 2), cellwidth);
+	}
+	
+	private void resetCellSize() {
+		cellheight = (int) data[0][0].getPreferredSize().getHeight();
+		cellwidth = Integer.max((int) data[0][0].getPreferredSize().getWidth(), getCellheight() * 2);
+	}
+	
+	public int getCellwidth() {
+		return cellwidth;
+	}
+	
+	public int getCellheight() {
+		return cellheight;
+	}
+	
+	public void setCellheight(int cellheight) {
+		this.cellheight = cellheight;
+	}
+	
+	public void setCellwidth(int cellwidth) {
+		this.cellwidth = cellwidth;
 	}
 	
 	@Override
@@ -85,14 +113,15 @@ public class Grid extends JComponent {
 		if(getCols() == 0) {
 			return new Dimension(0,0);
 		}
-		return new Dimension(getCols() * Integer.max((int) data[0][0].getPreferredSize().getWidth(), (int) data[0][0].getPreferredSize().getHeight() * 2), (int)(getLines() * data[0][0].getPreferredSize().getHeight()));
+		return new Dimension((int) (getCols() * getCellwidth()), getLines() * getCellheight());
 	}
 
 	private Cell[][] data;
+	private int cellwidth;
+	private int cellheight;
 	
 	public Grid(int lines, int columns, Font font) {
 		super();
-		//setLayout(new GridLayout(lines, columns));
 		data = new Cell[lines][columns];
 		for(int i = 0; i < data.length; ++i) {
 			for(int j = 0; j < data[i].length; ++j) {
@@ -101,6 +130,28 @@ public class Grid extends JComponent {
 				add(data[i][j]);
 			}
 		}
+		resetCellSize();
+	}
+	
+	public Grid(KMAPVAL[][] content, Font font) {
+		this(content.length, content[0].length, font);
+		for(int i = 0; i < data.length; ++i) {
+			for(int j = 0; j < data[i].length; ++j) {
+				data[i][j].setText(content[i][j].toString());
+			}
+		}
+		resetCellSize();
+	}
+	
+	public Grid(Cell[][] content) {
+		super();
+		data = content;
+		for(Cell[] row : content) {
+			for(Cell cell : row) {
+				add(cell);
+			}
+		}
+		resetCellSize();
 	}
 	
 	
