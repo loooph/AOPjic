@@ -13,7 +13,7 @@ public class KarnaughMap extends Map {
 		KMapHeader rowHead = new KMapHeader(KMapHeader.VERTICAL, getGrid().getCellheight(), getGrid().getLines(), font);
 		KMapCorner corner = new KMapCorner(vars);
 		colHead.setCellheight((int) corner.getPreferredSize().getHeight());
-		rowHead.setCellwidth((int) corner.getPreferredSize().getHeight());
+		rowHead.setCellwidth((int) corner.getPreferredSize().getWidth());
 		setCorner(JScrollPane.UPPER_LEFT_CORNER, corner);
 		setColumnHeaderView(colHead);
 		setRowHeaderView(rowHead);
