@@ -40,7 +40,7 @@ public class KMapCorner extends JComponent {
 		Graphics2D g2D = (Graphics2D) g;
 		g2D.setStroke(Map.THICK);
 		g2D.drawLine(0, 0, getWidth(), getHeight());
-		g2D.drawRect(0, 0, getWidth(), getHeight());
+		g2D.drawRect(0, 0, getWidth() - 1, getHeight() - 1);
 		rowDesc.setBounds(0, (int) (getHeight() - rowDesc.getPreferredSize().getHeight()), (int) rowDesc.getPreferredSize().getWidth(), (int) rowDesc.getPreferredSize().getHeight());
 		colDesc.setBounds((int) (getWidth() - colDesc.getPreferredSize().getWidth()), 0, (int) colDesc.getPreferredSize().getWidth(), (int) colDesc.getPreferredSize().getHeight());
 	}
