@@ -27,7 +27,7 @@ public class KMapHeader extends JComponent {
 			content.setHorizontalCellTextAlignment(SwingConstants.RIGHT);
 		} else {
 			content = new Grid(1, cells, font);
-			content.setHorizontalCellTextAlignment(SwingConstants.BOTTOM);
+			content.setVerticalCellTextAlignment(SwingConstants.BOTTOM);
 		}
 		for(int i = 0; i < cells; ++i) {
 			content.setVal(getGrayCode(i, cells - 1), i);
