@@ -1,8 +1,7 @@
 package minimizer;
 
-import java.awt.Dimension;
-
 import javax.swing.JLabel;
+import javax.swing.border.EmptyBorder;
 
 public class Cell extends JLabel {
 	/**
@@ -14,6 +13,8 @@ public class Cell extends JLabel {
 		super();
 		setVerticalAlignment(CENTER);
 		setHorizontalAlignment(CENTER);
+		// TODO dynamisch
+		setBorder(new EmptyBorder(0, 10, 0, 10));
 	}
 	
 	public Cell(String str) {
@@ -26,8 +27,8 @@ public class Cell extends JLabel {
 		setText(val.toString());
 	}
 
-	@Override
-	public Dimension getPreferredSize() {
-		return new Dimension((int) (super.getPreferredSize().getWidth() * 1.2), (int) super.getPreferredSize().getHeight());
-	}
+//	@Override
+//	public Dimension getPreferredSize() {
+//		return new Dimension((int) (super.getPreferredSize().getWidth() * 1.2), (int) super.getPreferredSize().getHeight());
+//	}
 }
