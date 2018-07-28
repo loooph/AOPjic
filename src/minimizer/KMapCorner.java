@@ -1,6 +1,7 @@
 package minimizer;
 
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
@@ -17,13 +18,14 @@ public class KMapCorner extends JComponent {
 	private Cell rowDesc;
 	private Cell colDesc;
 	
-	public KMapCorner(int vars) {
+	public KMapCorner(int vars, Font font) {
 		String str = "</html>";
 		for(int i = 0; i < (vars + 1) / 2; ++i) {
 			str = "X<sub>" + i + "</sub>" + str;
 		}
 		str = "<html>" + str;
 		colDesc = new Cell(str);
+		colDesc.setFont(font);
 		add(colDesc);
 		
 		str = "</html>";
@@ -32,6 +34,7 @@ public class KMapCorner extends JComponent {
 		}
 		str = "<html>" + str;
 		rowDesc = new Cell(str);
+		rowDesc.setFont(font);
 		add(rowDesc);
 	}
 
