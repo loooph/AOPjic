@@ -34,7 +34,6 @@ public class KMapHeader extends JComponent {
 		}
 		content.setBounds(new Rectangle(content.getPreferredSize()));
 		this.add(content);
-		System.out.println(content.getPreferredSize());
 	}
 	
 	@Override
