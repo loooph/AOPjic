@@ -1,27 +1,39 @@
 package minimizer;
 
-import java.awt.BorderLayout;
-
+import java.awt.BasicStroke;
 import java.awt.Font;
+import java.awt.Stroke;
 
-import javax.swing.JComponent;
+import javax.swing.JScrollPane;
 
 
-// TODO abstract
-public class Map extends JComponent {
+public abstract class Map extends JScrollPane {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private Grid grid;
+	public static final Stroke THIN = new BasicStroke(1.0f);
+	public static final Stroke THICK = new BasicStroke(1.6f);
 	
+	private Grid grid;
+
 	public Map(int vars, Font font) {
-		setLayout(new BorderLayout());
-		setBorder(new DescBorder(vars, 30, 20));
+		super();
 		grid = new Grid(1 << vars / 2, 1 << (vars + 1) / 2, font);
-		add(grid);
+		setViewportView(grid);
 	}
 	
+	public void setCellwidth(int cellwidth) {
+		grid.setCellwidth(cellwidth);
+	}
+	
+	public void setCellheight(int cellheight) {
+		grid.setCellheight(cellheight);
+	}
+
+	public Grid getGrid() {
+		return grid;
+	}
 }
