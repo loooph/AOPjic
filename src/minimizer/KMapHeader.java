@@ -35,13 +35,6 @@ public class KMapHeader extends JComponent {
 		content.setBounds(new Rectangle(content.getPreferredSize()));
 		this.add(content);
 	}
-	
-	@Override
-	protected void paintComponent(Graphics g) {
-		Graphics2D g2D = (Graphics2D) g;
-		g2D.setStroke(Map.THICK);
-		g2D.drawRect(0, 0, (int) content.getPreferredSize().getWidth() - 1, (int) content.getPreferredSize().getHeight() - 1);
-	}
 
 	@Override
 	public Dimension getPreferredSize() {
