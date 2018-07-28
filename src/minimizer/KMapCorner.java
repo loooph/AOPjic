@@ -1,10 +1,10 @@
 package minimizer;
 
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
 import javax.swing.JComponent;
-import javax.swing.JLabel;
 
 // TODO Zeichnen
 public class KMapCorner extends JComponent {
@@ -14,8 +14,8 @@ public class KMapCorner extends JComponent {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private JLabel rowDesc;
-	private JLabel colDesc;
+	private Cell rowDesc;
+	private Cell colDesc;
 	
 	public KMapCorner(int vars) {
 		String str = "</html>";
@@ -23,7 +23,7 @@ public class KMapCorner extends JComponent {
 			str = "X<sub>" + i + "</sub>" + str;
 		}
 		str = "<html>" + str;
-		colDesc = new JLabel(str);
+		colDesc = new Cell(str);
 		add(colDesc);
 		
 		str = "</html>";
@@ -31,7 +31,7 @@ public class KMapCorner extends JComponent {
 			str = "X<sub>" + i + "</sub>" + str;
 		}
 		str = "<html>" + str;
-		rowDesc = new JLabel(str);
+		rowDesc = new Cell(str);
 		add(rowDesc);
 	}
 
@@ -41,6 +41,14 @@ public class KMapCorner extends JComponent {
 		g2D.setStroke(Map.THICK);
 		g2D.drawLine(0, 0, getWidth(), getHeight());
 		g2D.drawRect(0, 0, getWidth(), getHeight());
-		
+		rowDesc.setBounds(0, (int) (getHeight() - rowDesc.getPreferredSize().getHeight()), (int) rowDesc.getPreferredSize().getWidth(), (int) rowDesc.getPreferredSize().getHeight());
+		colDesc.setBounds((int) (getWidth() - colDesc.getPreferredSize().getWidth()), 0, (int) colDesc.getPreferredSize().getWidth(), (int) colDesc.getPreferredSize().getHeight());
+	}
+
+	@Override
+	public Dimension getPreferredSize() {
+		int height = (int) colDesc.getPreferredSize().getHeight() + Integer.max((int) colDesc.getPreferredSize().getWidth(), (int) rowDesc.getPreferredSize().getWidth());
+		System.out.println(height);
+		return new Dimension(2 * height, height);
 	}
 }
