@@ -7,7 +7,6 @@ import java.awt.Graphics2D;
 import java.util.Random;
 
 import javax.swing.JComponent;
-import javax.swing.SwingConstants;
 
 public class Grid extends JComponent {
 	/**
