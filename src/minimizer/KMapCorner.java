@@ -6,6 +6,8 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 
 import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.border.EmptyBorder;
 
 // TODO Zeichnen
 public class KMapCorner extends JComponent {
@@ -15,8 +17,8 @@ public class KMapCorner extends JComponent {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private Cell rowDesc;
-	private Cell colDesc;
+	private JLabel rowDesc;
+	private JLabel colDesc;
 	
 	public KMapCorner(int vars, Font font) {
 		String str = "</html>";
@@ -24,8 +26,9 @@ public class KMapCorner extends JComponent {
 			str = "X<sub>" + i + "</sub>" + str;
 		}
 		str = "<html>" + str;
-		colDesc = new Cell(str);
-		colDesc.setFont(font);
+		colDesc = new JLabel(str);
+		colDesc.setFont(font.deriveFont(font.getSize() * 0.7f));
+		colDesc.setBorder(new EmptyBorder(0, 0, 0, 1));
 		add(colDesc);
 		
 		str = "</html>";
@@ -33,8 +36,9 @@ public class KMapCorner extends JComponent {
 			str = "X<sub>" + i + "</sub>" + str;
 		}
 		str = "<html>" + str;
-		rowDesc = new Cell(str);
-		rowDesc.setFont(font);
+		rowDesc = new JLabel(str);
+		rowDesc.setFont(font.deriveFont(font.getSize() * 0.7f));
+		rowDesc.setBorder(new EmptyBorder(0, 1, 1, 0));
 		add(rowDesc);
 	}
 
@@ -42,15 +46,16 @@ public class KMapCorner extends JComponent {
 	protected void paintComponent(Graphics g) {
 		Graphics2D g2D = (Graphics2D) g;
 		g2D.setStroke(Map.THICK);
-		g2D.drawLine(0, 0, getWidth(), getHeight());
+		g2D.drawLine(0, 0, getWidth() - 1, getHeight() - 1);
 		g2D.drawRect(0, 0, getWidth() - 1, getHeight() - 1);
-		rowDesc.setBounds(0, (int) (getHeight() - rowDesc.getPreferredSize().getHeight()), (int) rowDesc.getPreferredSize().getWidth(), (int) rowDesc.getPreferredSize().getHeight());
-		colDesc.setBounds((int) (getWidth() - colDesc.getPreferredSize().getWidth()), 0, (int) colDesc.getPreferredSize().getWidth(), (int) colDesc.getPreferredSize().getHeight());
+		// Positionierung der JLabels
+		rowDesc.setBounds(0, (int) (getHeight() - rowDesc.getPreferredSize().getHeight() + rowDesc.getFont().getSize() / 6), (int) rowDesc.getPreferredSize().getWidth(), (int) rowDesc.getPreferredSize().getHeight());
+		colDesc.setBounds((int) (getWidth() - colDesc.getPreferredSize().getWidth()), - colDesc.getFont().getSize() / 5, (int) colDesc.getPreferredSize().getWidth(), (int) colDesc.getPreferredSize().getHeight());
 	}
 
 	@Override
 	public Dimension getPreferredSize() {
-		int height = (int) colDesc.getPreferredSize().getHeight() + Integer.max((int) colDesc.getPreferredSize().getWidth(), (int) rowDesc.getPreferredSize().getWidth()) / 2;
-		return new Dimension(2 * height, height);
+		int height = (int) (0.88 * (colDesc.getPreferredSize().getHeight() + Integer.max((int) colDesc.getPreferredSize().getWidth(), (int) rowDesc.getPreferredSize().getWidth()) / 2.5));
+		return new Dimension((int) (2.5 * height), height);
 	}
 }
