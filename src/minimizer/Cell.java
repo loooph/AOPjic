@@ -1,5 +1,7 @@
 package minimizer;
 
+import java.awt.Dimension;
+
 import javax.swing.JLabel;
 
 public class Cell extends JLabel {
@@ -22,5 +24,10 @@ public class Cell extends JLabel {
 	public Cell(KMAPVAL val) {
 		this();
 		setText(val.toString());
+	}
+
+	@Override
+	public Dimension getPreferredSize() {
+		return new Dimension((int) (super.getPreferredSize().getWidth() * 1.2), (int) super.getPreferredSize().getHeight());
 	}
 }
