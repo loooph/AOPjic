@@ -55,5 +55,15 @@ public class KMapHeader extends JComponent {
 		return content.getCellwidth();
 	}
 	
+	public void setCellheight(int cellheight) {
+		content.setCellheight(cellheight);
+		content.setBounds(new Rectangle(content.getPreferredSize()));
+	}
+	
+	public void setCellwidth(int cellwidth) {
+		content.setCellwidth(cellwidth);
+		content.setBounds(new Rectangle(content.getPreferredSize()));
+	}
+	
 	
 }
