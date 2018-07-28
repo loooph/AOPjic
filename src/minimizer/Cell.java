@@ -23,14 +23,4 @@ public class Cell extends JLabel {
 		this();
 		setText(val.toString());
 	}
-
-	public static int chooseMaxFontSize(String str, int initSize, int width, int height) {
-		Cell cell = new Cell(str);
-		cell.setFont(cell.getFont().deriveFont((float) initSize));
-		while(cell.getPreferredSize().getWidth() > width 
-				|| cell.getPreferredSize().getHeight() > height) {
-			cell.setFont(cell.getFont().deriveFont(cell.getFont().getSize() - 1.0f));
-		}
-		return cell.getFont().getSize();
-	}
 }
