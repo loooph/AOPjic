@@ -48,7 +48,6 @@ public class KMapCorner extends JComponent {
 	@Override
 	public Dimension getPreferredSize() {
 		int height = (int) colDesc.getPreferredSize().getHeight() + Integer.max((int) colDesc.getPreferredSize().getWidth(), (int) rowDesc.getPreferredSize().getWidth());
-		System.out.println(height);
 		return new Dimension(2 * height, height);
 	}
 }
