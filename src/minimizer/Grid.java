@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import java.util.Random;
 
 import javax.swing.JComponent;
+import javax.swing.SwingConstants;
 
 public class Grid extends JComponent {
 	/**
@@ -26,25 +27,28 @@ public class Grid extends JComponent {
 		}
 		
 		// TODO Umrandung fett zeichnen
+		// Umrandung
+		g.setStroke(Map.THICK);
+		g.drawRect(0, 0, getWidth() - 1, getHeight() - 1);
 		// vertikal
-		for(int i = 0; i <= getCols(); ++i) {
+		for(int i = 1; i < getCols(); ++i) {
 			if( i % 4 == 0 ) {
 				g.setStroke(Map.THICK);
 			}
 			else {
 				g.setStroke(Map.THIN);
 			}
-			g.drawLine(i * getCellwidth() - 1, 0 , i * getCellwidth() - 1, getHeight());
+			g.drawLine(i * getCellwidth(), 0 , i * getCellwidth(), getHeight());
 		}
 		// horizontal
-		for(int i = 0; i <= getLines(); ++i) {
+		for(int i = 1; i < getLines(); ++i) {
 			if( i % 4 == 0 ) {
 				g.setStroke(Map.THICK);
 			}
 			else {
 				g.setStroke(Map.THIN);
 			}
-			g.drawLine(0, i * getCellheight() - 1, getWidth(), i * getCellheight() - 1);
+			g.drawLine(0, i * getCellheight(), getWidth(), i * getCellheight());
 		}
 		// Zellen
 		for(int i = 0; i < getLines(); ++i) {
@@ -147,6 +151,24 @@ public class Grid extends JComponent {
 			}
 		}
 		resetCellSize();
+	}
+	
+	// Alignment in SwingConstants
+	public void setHorizontalCellTextAlignment(int alignment) {
+		for(int i = 0; i < data.length; ++i) {
+			for(int j = 0; j < data[i].length; ++j) {
+				data[i][j].setHorizontalAlignment(alignment);
+			}
+		}
+	}
+	
+	// Alignment in SwingConstants
+	public void setVerticalCellTextAlignment(int alignment) {
+		for(int i = 0; i < data.length; ++i) {
+			for(int j = 0; j < data[i].length; ++j) {
+				data[i][j].setVerticalAlignment(alignment);
+			}
+		}
 	}
 	
 	
