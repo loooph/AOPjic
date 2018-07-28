@@ -26,9 +26,4 @@ public class Cell extends JLabel {
 		this();
 		setText(val.toString());
 	}
-
-//	@Override
-//	public Dimension getPreferredSize() {
-//		return new Dimension((int) (super.getPreferredSize().getWidth() * 1.2), (int) super.getPreferredSize().getHeight());
-//	}
 }
