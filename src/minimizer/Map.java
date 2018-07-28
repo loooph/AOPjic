@@ -2,6 +2,9 @@ package minimizer;
 
 import java.awt.BasicStroke;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.Stroke;
 
 import javax.swing.JScrollPane;
@@ -25,6 +28,12 @@ public abstract class Map extends JScrollPane {
 		setViewportView(grid);
 	}
 	
+	@Override
+	public void paint(Graphics g) {
+		((Graphics2D) g).setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		super.paint(g);
+	}
+
 	public void setCellwidth(int cellwidth) {
 		grid.setCellwidth(cellwidth);
 	}
