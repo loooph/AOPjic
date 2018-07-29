@@ -1,5 +1,6 @@
 package minimizer;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -168,6 +169,11 @@ public class Grid extends JComponent {
 				data[i][j].setVerticalAlignment(alignment);
 			}
 		}
+	}
+
+	public void highlightCell(int pos, Color color) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	
