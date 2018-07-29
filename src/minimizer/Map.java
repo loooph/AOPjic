@@ -34,6 +34,7 @@ public abstract class Map extends JScrollPane {
 
 	public Map(int vars, Font font) {
 		super();
+		this.vars = vars;
 		grid = new Grid(1 << vars / 2, 1 << (vars + 1) / 2, font);
 		setViewportView(grid);
 		getHorizontalScrollBar().setUnitIncrement(grid.getCellwidth());
