@@ -4,6 +4,11 @@ import javax.swing.JLabel;
 import javax.swing.border.EmptyBorder;
 
 public class Cell extends JLabel {
+	@Override
+	public boolean isOpaque() {
+		return true;
+	}
+
 	/**
 	 * 
 	 */
