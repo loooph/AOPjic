@@ -80,8 +80,12 @@ public class Grid extends JComponent {
 	}
 	
 	public void setVal(String val, int pos) {
-		data[pos % getLines()][pos / getLines()].setText(val);;
-		updateCellSize(pos % getLines(), pos / getLines());
+		int row = pos / getCols();
+		int col = pos % getCols();
+		if(row % 2 != 0 ) {
+			col = getCols() - col - 1;
+		}
+		setVal(val, row, col);
 	}
 	
 	private void updateCellSize(int row, int col) {
@@ -153,7 +157,7 @@ public class Grid extends JComponent {
 		resetCellSize();
 	}
 	
-	// Alignment in SwingConstants
+	// Alignment-Konstante aus SwingConstants
 	public void setHorizontalCellTextAlignment(int alignment) {
 		for(int i = 0; i < data.length; ++i) {
 			for(int j = 0; j < data[i].length; ++j) {
@@ -162,7 +166,7 @@ public class Grid extends JComponent {
 		}
 	}
 	
-	// Alignment in SwingConstants
+	// Alignment-Konstante aus SwingConstants
 	public void setVerticalCellTextAlignment(int alignment) {
 		for(int i = 0; i < data.length; ++i) {
 			for(int j = 0; j < data[i].length; ++j) {
@@ -171,8 +175,15 @@ public class Grid extends JComponent {
 		}
 	}
 
+	// möglicherweise inkompatibel mit KV-Diagramm
 	public void highlightCell(int pos, Color color) {
-		data[pos % getLines()][pos / getLines()].setBackground(color);
+		int row = pos / getCols();
+		int col = pos % getCols();
+		if(row % 2 != 0 ) {
+			col = getCols() - col - 1;
+		}
+		data[row][col].setBackground(color);
+
 	}
 	
 	
