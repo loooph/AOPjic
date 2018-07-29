@@ -172,8 +172,7 @@ public class Grid extends JComponent {
 	}
 
 	public void highlightCell(int pos, Color color) {
-		// TODO Auto-generated method stub
-		
+		data[pos % getLines()][pos / getLines()].setBackground(color);
 	}
 	
 	
