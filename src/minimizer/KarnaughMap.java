@@ -35,12 +35,25 @@ public class KarnaughMap extends Map {
 		if(primeterm.length != getVars()) {
 			throw new IllegalArgumentException("Wrong number of variables!");
 		}
-		List<Integer> cells = new ArrayList<>();
-		
-		// TODO Zellen berechnen
-		
-		cells.parallelStream().map(this::GrayToBinary);
-		cells.forEach(e -> highlightCell(e, color));
+		List<String> cells = new ArrayList<>();
+		cells.add("");
+		for(int i = 0; i < primeterm.length; ++i) {
+			switch(primeterm[i]) {
+				case TRUE:
+					cells.replaceAll(e -> "1" + e);
+					break;
+				case FALSE:
+					cells.replaceAll(e -> "1" + e);
+					break;
+				case DONTCARE:
+					List<String> newCells = new ArrayList<>(cells);
+					newCells.replaceAll(e -> "1" + e);
+					cells.replaceAll(e -> "0" + e);
+					cells.addAll(newCells);
+					break;
+			}
+		}
+		cells.parallelStream().mapToInt(e -> Integer.parseInt(e, 2)).map(this::GrayToBinary).forEach(e -> highlightCell(e, color));
 	}
 	
 	// https://en.wikipedia.org/wiki/Gray_code#Converting_to_and_from_Gray_code
