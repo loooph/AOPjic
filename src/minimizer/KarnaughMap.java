@@ -43,7 +43,7 @@ public class KarnaughMap extends Map {
 					cells.replaceAll(e -> "1" + e);
 					break;
 				case FALSE:
-					cells.replaceAll(e -> "1" + e);
+					cells.replaceAll(e -> "0" + e);
 					break;
 				case DONTCARE:
 					List<String> newCells = new ArrayList<>(cells);
