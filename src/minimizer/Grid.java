@@ -27,9 +27,10 @@ public class Grid extends JComponent {
 		}
 		
 		// TODO Umrandung fett zeichnen
+		// TODO Gitterlinien in Vordergrund
 		// Umrandung
 		g.setStroke(Map.THICK);
-		g.drawRect(0, 0, getWidth() - 1, getHeight() - 1);
+		g.drawRect(0, 0, getCols() * getCellwidth(), getLines() * getCellheight());
 		// vertikal
 		for(int i = 1; i < getCols(); ++i) {
 			if( i % 4 == 0 ) {
@@ -38,7 +39,7 @@ public class Grid extends JComponent {
 			else {
 				g.setStroke(Map.THIN);
 			}
-			g.drawLine(i * getCellwidth(), 0 , i * getCellwidth(), getHeight());
+			g.drawLine(i * getCellwidth(), 0 , i * getCellwidth(), getLines() * getCellheight());
 		}
 		// horizontal
 		for(int i = 1; i < getLines(); ++i) {
@@ -48,7 +49,7 @@ public class Grid extends JComponent {
 			else {
 				g.setStroke(Map.THIN);
 			}
-			g.drawLine(0, i * getCellheight(), getWidth(), i * getCellheight());
+			g.drawLine(0, i * getCellheight(), getCols() * getCellwidth(), i * getCellheight());
 		}
 		// Zellen
 		for(int i = 0; i < getLines(); ++i) {
