@@ -198,11 +198,12 @@ public class Grid extends JComponent {
 	}
 	
 	
-	public Color avgColor(Color col1, Color col2) {
+	public static Color avgColor(Color col1, Color col2) {
 		return new Color(
-				(int) Math.sqrt((col1.getRed() * col1.getRed() + col2.getRed() + col2.getRed()) / 2),
-				(int) Math.sqrt((col1.getGreen() * col1.getGreen() + col2.getGreen() + col2.getGreen()) / 2),
-				(int) Math.sqrt((col1.getBlue() * col1.getBlue() + col2.getBlue() + col2.getBlue()) / 2));
+				(int) Math.sqrt((col1.getRed() * col1.getRed() * col1.getAlpha() + col2.getRed() * col2.getRed() * col2.getAlpha()) / (col1.getAlpha() + col2.getAlpha())),
+				(int) Math.sqrt((col1.getGreen() * col1.getGreen() * col1.getAlpha() + col2.getGreen() * col2.getGreen() * col2.getAlpha()) / (col1.getAlpha() + col2.getAlpha())),
+				(int) Math.sqrt((col1.getBlue() * col1.getBlue() * col1.getAlpha() + col2.getBlue() * col2.getBlue() * col2.getAlpha()) / (col1.getAlpha() + col2.getAlpha())),
+				Integer.max(col1.getAlpha(), col2.getAlpha()));
 	}
 	
 	
