@@ -17,17 +17,18 @@ public class Grid extends JComponent {
 
 	
 	@Override
-	public void paintComponent(Graphics g) {
-		draw((Graphics2D) g);
+	public void paint(Graphics g) {
+		positionCells();
+		super.paint(g);
+		drawGrid((Graphics2D) g);
 	}
 
-	private void draw(Graphics2D g) {
+	private void drawGrid(Graphics2D g) {
 		if(getCols() == 0) {
 			return;
 		}
 		
 		// TODO Umrandung fett zeichnen
-		// TODO Gitterlinien in Vordergrund
 		// Umrandung
 		g.setStroke(Map.THICK);
 		g.drawRect(0, 0, getCols() * getCellwidth(), getLines() * getCellheight());
@@ -51,7 +52,9 @@ public class Grid extends JComponent {
 			}
 			g.drawLine(0, i * getCellheight(), getCols() * getCellwidth(), i * getCellheight());
 		}
-		// Zellen
+	}
+	
+	private void positionCells() {
 		for(int i = 0; i < getLines(); ++i) {
 			for(int j = 0; j < getCols(); ++j) {
 				data[i][j].setBounds(j * getCellwidth(), i * getCellheight(), getCellwidth(), getCellheight());
@@ -176,15 +179,22 @@ public class Grid extends JComponent {
 		}
 	}
 
-	// möglicherweise inkompatibel mit KV-Diagramm
+	// möglicherweise inkompatibel mit KV-Diagramm, Transparenz 100
 	public void highlightCell(int pos, Color color) {
 		int row = pos / getCols();
 		int col = pos % getCols();
 		if(row % 2 != 0 ) {
 			col = getCols() - col - 1;
 		}
-		data[row][col].setBackground(color);
-
+		// TODO composing colors
+		data[row][col].setBackground(avgColor(color, data[row][col].getBackground()));
+	}
+	
+	public Color avgColor(Color col1, Color col2) {
+		return new Color(
+				(int) Math.sqrt((col1.getRed() * col1.getRed() + col2.getRed() + col2.getRed()) / 2),
+				(int) Math.sqrt((col1.getGreen() * col1.getGreen() + col2.getGreen() + col2.getGreen()) / 2),
+				(int) Math.sqrt((col1.getBlue() * col1.getBlue() + col2.getBlue() + col2.getBlue()) / 2));
 	}
 	
 	
