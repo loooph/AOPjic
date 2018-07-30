@@ -179,16 +179,24 @@ public class Grid extends JComponent {
 		}
 	}
 
-	// möglicherweise inkompatibel mit KV-Diagramm, Transparenz 100
-	public void highlightCell(int pos, Color color) {
+	// möglicherweise inkompatibel mit KV-Diagramm
+	public void highlightCell(int pos, Color color, boolean overwrite) {
 		int row = pos / getCols();
 		int col = pos % getCols();
 		if(row % 2 != 0 ) {
 			col = getCols() - col - 1;
 		}
-		// TODO composing colors
-		data[row][col].setBackground(avgColor(color, data[row][col].getBackground()));
+		highlightCell(row, col, color, overwrite);
 	}
+	
+	public void highlightCell(int row, int col, Color color, boolean overwrite) {
+		if(overwrite) {
+			data[row][col].setBackground(color);
+		} else {
+			data[row][col].setBackground(avgColor(color, data[row][col].getBackground()));
+		}
+	}
+	
 	
 	public Color avgColor(Color col1, Color col2) {
 		return new Color(
