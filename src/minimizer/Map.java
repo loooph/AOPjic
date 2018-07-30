@@ -31,7 +31,15 @@ public abstract class Map extends JScrollPane {
 	public void setVars(int vars) {
 		this.vars = vars;
 	}
-
+	
+	public abstract void setVal(String minterm, String val);
+	
+	public abstract void setVal(String minterm, KMAPVAL val);
+	
+	public void setVal(KMAPVAL val, int pos) {
+		grid.setVal(val.toString(), pos);
+	}
+	
 	public Map(int vars, Font font) {
 		super();
 		this.vars = vars;
