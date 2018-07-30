@@ -12,7 +12,7 @@ import javax.swing.table.DefaultTableModel;
 public class ApplicationModel
 {
 	private DefaultTableModel truthTable = new DefaultTableModel();
-
+	
 	public DefaultTableModel getTruthTable()
 	{
 		return truthTable;
@@ -115,6 +115,7 @@ public class ApplicationModel
 		String data = ".i " + variablesCount + System.lineSeparator() + ".o "
 				+ functionsCount;
 
+		@SuppressWarnings("unchecked")	// Tabelle enthält nur Strings
 		Vector<Vector<String>> vec = truthTable.getDataVector();
 		Vector<String> elements;
 		int n = vec.size();
@@ -153,11 +154,14 @@ public class ApplicationModel
 			if (!outputType.isEmpty()) optionsStr += " -o" + outputType;
 			String command = "cmd /c bin\\espresso " + optionsStr + " " + inputFile + " > " + outputFile;
 			//System.out.println(command); //Test
-			Process espresso = Runtime.getRuntime().exec(command);
-			int errorCode;
+			Process espresso = Runtime.getRuntime().exec(command);		
 			try
 			{
+				int errorCode;
 				errorCode = espresso.waitFor();
+				if(errorCode != 0) {
+					throw new InterruptedException();
+				}
 			}
 			catch (InterruptedException e)
 			{

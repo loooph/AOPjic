@@ -21,6 +21,10 @@ import javax.swing.table.TableCellEditor;
 
 public class ApplicationView extends JFrame
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public JTable table;
 	public JSpinner varsCountSpinner;
 	public JSpinner functionsCountSpinner;
@@ -76,6 +80,10 @@ public class ApplicationView extends JFrame
 		
 		table = new JTable(new DefaultTableModel())
 		{
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
 			DefaultCellEditor myCellEditor = new DefaultCellEditor(new JComboBox<String>(new String[] {"0", "1", "-"}));
 			
 			@Override
