@@ -9,7 +9,6 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.border.EmptyBorder;
 
-// TODO Zeichnen
 public class KMapCorner extends JComponent {
 
 	/**
