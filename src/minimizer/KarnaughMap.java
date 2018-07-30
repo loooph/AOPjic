@@ -31,7 +31,7 @@ public class KarnaughMap extends Map {
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	public void highlight(KMAPVAL[] primeterm, Color color) {
+	public void highlight(KMAPVAL[] primeterm, Color color, boolean overwrite) {
 		if(primeterm.length != getVars()) {
 			throw new IllegalArgumentException("Wrong number of variables!");
 		}
@@ -53,7 +53,7 @@ public class KarnaughMap extends Map {
 					break;
 			}
 		}
-		cells.parallelStream().mapToInt(e -> Integer.parseInt(e, 2)).map(this::GrayToBinary).forEach(e -> highlightCell(e, color));
+		cells.parallelStream().mapToInt(e -> Integer.parseInt(e, 2)).map(this::GrayToBinary).forEach(e -> highlightCell(e, color, overwrite));
 	}
 	
 	// https://en.wikipedia.org/wiki/Gray_code#Converting_to_and_from_Gray_code
