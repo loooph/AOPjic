@@ -64,9 +64,10 @@ public abstract class Map extends JScrollPane {
 	 * @param primeterm Primimplikant, Wert an der Stelle i entspricht der Variablen x_i
 	 * @param color Farbe in der der Block hervorgehoben wird
 	 */
-	public abstract void highlight(KMAPVAL[] primeterm, Color color);
+	public abstract void highlight(KMAPVAL[] primeterm, Color color, boolean overwrite);
 	
-	public void highlightCell(int pos, Color color) {
-		grid.highlightCell(pos, color);
+	public void highlightCell(int pos, Color color, boolean overwrite) {
+		grid.highlightCell(pos, color, overwrite);
+		repaint();
 	}
 }
