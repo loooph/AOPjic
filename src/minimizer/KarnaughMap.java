@@ -67,4 +67,14 @@ public class KarnaughMap extends Map {
 	    }
 	    return gray;
 	}
+
+	@Override
+	public void setVal(String minterm, String val) {
+		setVal(minterm, KMAPVAL.toKMAPVALArray(val)[0]);
+	}
+
+	@Override
+	public void setVal(String minterm, KMAPVAL val) {
+		setVal(val, GrayToBinary(Integer.parseInt(minterm, 2)));
+	}
 }
