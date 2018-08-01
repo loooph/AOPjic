@@ -96,5 +96,6 @@ public class ApplicationController implements ActionListener, ChangeListener
 		model.minimize(options, outputType);
 		view.varsCountSpinner.setValue(model.getVariablesCount());
 		view.functionsCountSpinner.setValue(model.getFunctionsCount());
+		Minimizewindow window1 = new Minimizewindow(model);
 	}
 }
