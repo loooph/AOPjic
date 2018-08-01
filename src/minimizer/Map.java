@@ -13,6 +13,12 @@ import javax.swing.JScrollPane;
 
 public abstract class Map extends JScrollPane {
 
+	@Override
+	public boolean isOpaque() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
 	/**
 	 * 
 	 */
